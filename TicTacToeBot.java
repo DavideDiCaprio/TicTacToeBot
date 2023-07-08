@@ -6,15 +6,7 @@ public class TicTacToeBot extends TicTacToe {
     @Override
     public String displayBoard(char[][] board) {
 
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (j == board[i].length - 1) System.out.print(board[i][j]);
-                else System.out.print(board[i][j] + " | ");
-            }
-
-            //System.out.println();
-        }
-
+        //TO DO 
         return Arrays.deepToString(board);
     }
 
