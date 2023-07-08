@@ -10,42 +10,46 @@ public class TelegramBot {
     public JSONObject getReceivedMessage() {
 
         String apiToken = "";
-
         String request = "https://api.telegram.org/bot" + apiToken + "/getUpdates"; 
-
         String jsonText = null;
 
-        try {
+        while (true) {
 
-            StringBuilder result = new StringBuilder();
-            URL url = new URL(request);
-            URLConnection conn = url.openConnection();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
+            sleep(500);
 
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
+            try {
+
+                StringBuilder result = new StringBuilder();
+                URL url = new URL(request);
+                URLConnection conn = url.openConnection();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String line;
+
+                while ((line = rd.readLine()) != null) {
+                    result.append(line);
+                }
+
+                jsonText = String.valueOf(result);
+                rd.close();
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
 
-            jsonText = String.valueOf(result);
-            rd.close();
+            JSONObject jsonObject = new JSONObject(jsonText);
+            JSONArray resultArray = jsonObject.getJSONArray("result");
 
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+            if (resultArray.length() == 0) {
+                return null;
+            }
+
+            if (resultArray.length() > 1) {
+                JSONObject lastMessageObject = resultArray.getJSONObject(resultArray.length() - 1);
+                JSONObject messageObject = lastMessageObject.getJSONObject("message");
+
+                return messageObject;
+            }
         }
-
-        JSONObject jsonObject = new JSONObject(jsonText);
-        JSONArray resultArray = jsonObject.getJSONArray("result");
-
-        if (resultArray.length() == 0) {
-            return null;
-        }
-
-        // Get the last message from the result list
-        JSONObject lastMessageObject = resultArray.getJSONObject(resultArray.length() - 1);
-        JSONObject messageObject = lastMessageObject.getJSONObject("message");
-
-        return messageObject;
     }
 
     public void sendMessage(String message) {
