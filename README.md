@@ -2,4 +2,4 @@
 
 A Java implementation of a TicTacToe game for a Telegram bot.
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/FJInbOFUNXs/0.jpg)](https://www.youtube.com/watch?v=FJInbOFUNXs)
+![ezgif com-video-to-gif](https://github.com/DavideDiCaprio/TicTacToeBot/assets/93427056/a4994127-c2ee-43ea-a350-65171b6c18df)
