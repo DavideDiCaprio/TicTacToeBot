@@ -3,15 +3,21 @@ import java.util.InputMismatchException;
 
 public class TicTacToeBot extends TicTacToe {
 
-    @Override
-    public String displayBoard(char[][] board) {
-        
+    public HashMap unicodeMap() {
+
         HashMap<Character, Character> unicodeChar = new HashMap<Character, Character>();
 
         unicodeChar.put('X','\u0058');
         unicodeChar.put('O','\u004F');
         unicodeChar.put(' ','\u002D');
+
+        return unicodeChar;
+    }
+
+    @Override
+    public String displayBoard(char[][] board) {
         
+        HashMap unicodeChar = unicodeMap();
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < board.length; i++) {
@@ -22,6 +28,7 @@ public class TicTacToeBot extends TicTacToe {
                     sb.append('\u2503');
                 }
             }
+            
             sb.append("%0A");
         }
 
