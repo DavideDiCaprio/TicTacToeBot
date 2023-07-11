@@ -5,13 +5,33 @@ public class TicTacToeBot extends TicTacToe {
 
     @Override
     public String displayBoard(char[][] board) {
+        
+        HashMap<Character, Character> unicodeChar = new HashMap<Character, Character>();
 
-        //TO DO 
-        return Arrays.deepToString(board);
+        unicodeChar.put('X','\u0058');
+        unicodeChar.put('O','\u004F');
+        unicodeChar.put(' ','\u002D');
+        
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                sb.append(unicodeChar.get((board[i][j])));
+
+                if (j < board[i].length - 1) {
+                    sb.append('\u2503');
+                }
+            }
+            sb.append("%0A");
+        }
+
+        String boardtxt = sb.toString();
+        return boardtxt;
     }
 
+
     @Override
-    public Number[] GetPlayerCoordinate(char [][] board, TelegramBot botTelegram) throws InterruptedException {
+    public Number[] getPlayerCoordinate(char [][] board, TelegramBot botTelegram) throws InterruptedException {
 
         Number[] playerMoveCoordinates = new Number[2];
 
@@ -36,7 +56,7 @@ public class TicTacToeBot extends TicTacToe {
 
 
             } catch (InputMismatchException | InterruptedException e) {
-                botTelegram.sendMessage("input must be a number");
+                botTelegram.sendMessage("Input must be a number");
                 botTelegram.receiveMessage();
                 continue;
             }
@@ -100,9 +120,9 @@ public class TicTacToeBot extends TicTacToe {
 
         while ( getWinner(board) == '$' && isAnyMovePossible(board) ) {
 
-            botTelegram.sendMessage("Player is your turn..");
+            botTelegram.sendMessage("Your turn..");
 
-            Number[] playerCoordinates = GetPlayerCoordinate(board, botTelegram);
+            Number[] playerCoordinates = getPlayerCoordinate(board, botTelegram);
 
             int coordinateX = (int) playerCoordinates[0];
             int coordinateY = (int) playerCoordinates[1];
